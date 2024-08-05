@@ -16,7 +16,6 @@ import type {
 import { DatePicker as DatePickerPrimitive } from "@ark-ui/solid";
 import type { VoidProps } from "solid-js";
 import { splitProps } from "solid-js";
-import { Portal } from "solid-js/web";
 import { buttonVariants } from "./button";
 
 export const DatePickerLabel = DatePickerPrimitive.Label;
@@ -37,7 +36,7 @@ export const DatePicker = (props: DatePickerRootProps) => {
         const normalizedDate = new Date(
           parsedDate.getUTCFullYear(),
           parsedDate.getUTCMonth(),
-          parsedDate.getUTCDate()
+          parsedDate.getUTCDate(),
         );
 
         return new Intl.DateTimeFormat("en-US", {
@@ -70,7 +69,7 @@ export const DatePickerViewControl = (props: DatePickerViewControlProps) => {
           buttonVariants({
             variant: "outline",
           }),
-          "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100"
+          "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100",
         )}
       >
         <svg
@@ -95,7 +94,7 @@ export const DatePickerViewControl = (props: DatePickerViewControlProps) => {
           buttonVariants({
             variant: "outline",
           }),
-          "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100"
+          "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100",
         )}
       >
         <svg
@@ -119,7 +118,7 @@ export const DatePickerViewControl = (props: DatePickerViewControlProps) => {
 };
 
 export const DatePickerRangeText = (
-  props: VoidProps<DatePickerRangeTextProps>
+  props: VoidProps<DatePickerRangeTextProps>,
 ) => {
   const [local, rest] = splitProps(props, ["class"]);
 
@@ -160,7 +159,7 @@ export const DatePickerTableHeader = (props: DatePickerTableHeaderProps) => {
     <DatePickerPrimitive.TableHeader
       class={cn(
         "w-8 flex-1 text-[0.8rem] font-normal text-muted-foreground",
-        local.class
+        local.class,
       )}
       {...rest}
     />
@@ -177,7 +176,7 @@ export const DatePickerTableCell = (props: DatePickerTableCellProps) => {
         "has-[[data-in-range]]:bg-accent has-[[data-in-range]]:first-of-type:rounded-l-md has-[[data-in-range]]:last-of-type:rounded-r-md",
         "has-[[data-range-end]]:rounded-r-md has-[[data-range-start]]:rounded-l-md",
         "has-[[data-outside-range][data-in-range]]:bg-accent/50",
-        local.class
+        local.class,
       )}
       {...rest}
     />
@@ -185,7 +184,7 @@ export const DatePickerTableCell = (props: DatePickerTableCellProps) => {
 };
 
 export const DatePickerTableCellTrigger = (
-  props: DatePickerTableCellTriggerProps
+  props: DatePickerTableCellTriggerProps,
 ) => {
   const [local, rest] = splitProps(props, ["class"]);
 
@@ -200,7 +199,7 @@ export const DatePickerTableCellTrigger = (
         "data-[disabled]:text-muted-foreground data-[disabled]:opacity-50",
         "data-[outside-range]:text-muted-foreground data-[outside-range]:opacity-50",
         "[&:is([data-outside-range][data-in-range])]:bg-accent/50 [&:is([data-outside-range][data-in-range])]:text-muted-foreground [&:is([data-outside-range][data-in-range])]:opacity-30",
-        local.class
+        local.class,
       )}
       {...rest}
     />
@@ -222,20 +221,17 @@ export const DatePickerContent = (props: DatePickerContentProps) => {
   const [local, rest] = splitProps(props, ["class", "children"]);
 
   return (
-    <Portal>
-      <DatePickerPrimitive.Positioner>
-        <DatePickerPrimitive.Content
-          class={cn(
-            "z-50 ", // <-- added this to place both dialogs in the same layer
-            "rounded-md border bg-popover p-3 text-popover-foreground shadow-md outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95",
-            local.class
-          )}
-          {...rest}
-        >
-          {local.children}
-        </DatePickerPrimitive.Content>
-      </DatePickerPrimitive.Positioner>
-    </Portal>
+    <DatePickerPrimitive.Positioner>
+      <DatePickerPrimitive.Content
+        class={cn(
+          "rounded-md border bg-popover p-3 text-popover-foreground shadow-md outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 z-50",
+          local.class,
+        )}
+        {...rest}
+      >
+        {local.children}
+      </DatePickerPrimitive.Content>
+    </DatePickerPrimitive.Positioner>
   );
 };
 
@@ -247,7 +243,7 @@ export const DatePickerInput = (props: DatePickerInputProps) => {
       <DatePickerPrimitive.Input
         class={cn(
           "w-full appearance-none bg-transparent outline-none",
-          local.class
+          local.class,
         )}
         {...rest}
       />
